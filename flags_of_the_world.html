@@ -281,6 +281,8 @@
 ];
 
         let score = 0;
+        let mode = 'flags'; // 'flags' or 'countries'
+        let currentCountries = [...countries];
 
         const originalOrder = [...countries];
 
@@ -300,42 +302,47 @@
                 const flagDiv = document.createElement('div');
                 flagDiv.className = 'flag';
                 flagDiv.setAttribute('data-code', country.code);
-                flagDiv.innerHTML = `<img src="https://flagcdn.com/${country.code}.svg" alt="${country.country}" class="flag-img">`;
+                if (mode === 'flags') {
+                    flagDiv.innerHTML = `<img src="https://flagcdn.com/${country.code}.svg" alt="${country.country}" class="flag-img">`;
+                } else if (mode === 'countries') {
+                    flagDiv.innerHTML = `<div class="country-name">${country.country}</div>`;
+                }
                 flagDiv.onclick = (event) => revealCountryName(event, flagDiv, country.country);
                 colDiv.appendChild(flagDiv);
                 flagsGrid.appendChild(colDiv);
             });
         }
 
+        function resetScore() {
+            score = 0;
+            updateScore();
+        }
+
         renderFlags(countries);
 
         document.getElementById('shuffle-button').onclick = () => {
-            shuffle(countries);
-            renderFlags(countries);
+            resetScore();
+            shuffle(currentCountries);
+            renderFlags(currentCountries);
         };
 
         document.getElementById('restore-button').onclick = () => {
-            renderFlags(originalOrder);
+            resetScore();
+            mode = 'flags';
+            currentCountries = [...originalOrder];
+            renderFlags(currentCountries);
         };
 
         document.getElementById('show-countries-button').onclick = () => {
-            revealAllCountryNames();
+            resetScore();
+            mode = 'countries';
+            currentCountries = [...originalOrder];
+            renderFlags(currentCountries);
         };
 
         function revealCountryName(event, element, countryName) {
             event.preventDefault();
             element.innerHTML = `<div class="country-name" ondblclick="returnFlag(event, '${element.getAttribute('data-code')}', '${countryName}')" onclick="changeBackground(event, 'green-background')" oncontextmenu="changeBackground(event, 'red-background')">${countryName}</div>`;
-        }
-
-        function revealAllCountryNames() {
-            const flags = document.querySelectorAll('.flag');
-            flags.forEach(flag => {
-                const countryCode = flag.getAttribute('data-code');
-                const country = countries.find(c => c.code === countryCode);
-                if (country) {
-                    flag.innerHTML = `<div class="country-name">${country.country}</div>`;
-                }
-            });
         }
 
         function changeBackground(event, colorClass) {
