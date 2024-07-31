@@ -9,6 +9,8 @@ Welcome to the Flags of the World game! This game presents players with flags fr
 3. If you recognize the country name, left-click on it to earn 1 point.
 4. If you don't recognize the country name, right-click to move on to the next flag without affecting your score.
 
+![Capture](https://github.com/user-attachments/assets/5c9ef715-7ca9-4e86-a985-7689bce7871a)
+
 ## Getting Started
 
 To run the game, simply follow these steps:
