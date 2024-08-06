@@ -145,7 +145,7 @@ const countries = [{"country": "אפגניסטן", "code": "af", "flag_base64": 
         }
 
         function revealCountryName(event, element, image, countryName, background) {
-            event.preventDefault();
+			event.preventDefault();
             element.innerHTML = `<div class="country-name ${background}" ondblclick="returnFlag(event, '${image}', '${countryName}')" onclick="changeBackground(event, 'green-background')" oncontextmenu="changeBackground(event, 'red-background')">${countryName}</div>`;
             updateCounters();
         }
@@ -231,6 +231,7 @@ const countries = [{"country": "אפגניסטן", "code": "af", "flag_base64": 
 
         function changeBackground(event, colorClass) {
             event.stopPropagation();
+			event.preventDefault();
             const countryNameDiv = event.target;
             const currentClass = countryNameDiv.classList.contains('green-background') ? 'green-background' :
                                 (countryNameDiv.classList.contains('red-background') ? 'red-background' : 'white-background');
